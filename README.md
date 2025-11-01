@@ -50,19 +50,19 @@ main
 
 배포용 브랜치. (절대 직접 Push 금지)
 
-develop
+dev
 
 개발의 중심이 되는 브랜치.
 
-모든 feature 브랜치는 develop에서 시작해서 develop으로 Merge(PR)됩니다.
+모든 feature 브랜치는 dev에서 시작해서 dev으로 Merge(PR)됩니다.
 
 feature/[담당자]/[기능]
 
 실제 작업 브랜치.
 
-develop에서 브랜치를 생성합니다. (예: feature/FE1/setup-routing, feature/FE2/design-theme)
+dev에서 브랜치를 생성합니다. (예: feature/FE1/setup-routing, feature/FE2/design-theme)
 
-작업 완료 후 develop 브랜치로 **Pull Request (PR)**를 보냅니다.
+작업 완료 후 dev 브랜치로 **Pull Request (PR)**를 보냅니다.
 
 3. ✍️ 코딩 컨벤션 (Coding Convention)
 3.1. 기본 원칙
