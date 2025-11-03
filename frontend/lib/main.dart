@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,8 +11,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    return MaterialApp.router(
+
+      routerConfig: router,
+
+
+      title: '찰칵! 쿠킹 레시피',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -28,9 +33,27 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xFFFF6B6B)),// A warm red color
+
+
+        textTheme: const TextTheme(
+          // Example: App title style
+            headlineLarge: TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+            ),
+            // Example: Default body text style
+            bodyMedium: TextStyle(
+              fontSize: 16.0,
+            ),
+        ),
+
+        useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+
+
+      // [삭제!] home: 속성은 라우터가 관리하므로 삭제합니다.
     );
   }
 }

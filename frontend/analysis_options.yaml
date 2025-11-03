@@ -21,6 +21,20 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
+    # Issue a warning if const is not used where possible
+    prefer_const_constructors: true
+
+    # Use debugPrint() instead of print()
+    # (print may log even in release mode)
+    avoid_print: true
+
+    # Specify types (String, int, etc. instead of var)
+    # always_specify_types: true # (This is too strict, so comment it out for now)
+
+    # Force file names to be lowercase snake case (my_file.dart)
+    file_names: true
+
+
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
 
