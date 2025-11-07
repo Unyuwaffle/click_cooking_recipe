@@ -1,8 +1,14 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'router.dart';
 
+
 void main() {
-  runApp(const MyApp());
+  runApp(
+      const ProviderScope(
+    child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
