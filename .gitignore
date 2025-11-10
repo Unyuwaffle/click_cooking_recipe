@@ -1,0 +1,6 @@
+# IDE Files and Python cache (Sub-folder specific)
+*/.idea/
+*/__pycache__/
+*.pyc
+*/venv/
+*.json
