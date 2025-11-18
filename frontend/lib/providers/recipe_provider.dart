@@ -26,17 +26,30 @@ class RecipeNotifier extends AsyncNotifier<RecipeResponse?> {
   Future<void> fetchRecipes(File image) async {
     // 1. Set state to loading
     state = const AsyncLoading();
+    // [NEW] Clear any previous error when a new request starts
+    ref.read(recipeErrorProvider.notifier).state = null;
 
-    // 2. Read the ApiService from the provider we made in Week 2
+    // 2. Read the ApiService
     final apiService = ref.read(apiServiceProvider);
 
-    // 3. Call the API and update the state
-    // AsyncValue.guard handles try/catch for us
-    state = await AsyncValue.guard(
-          () => apiService.recommendRecipes(image),
-    );
+    // 3. We use a manual try-catch instead of AsyncValue.guard
+    //    to gain control over the error object.
+    try {
+      // 3a. Call the API
+      final recipeData = await apiService.recommendRecipes(image);
+      
+      // 3b. Update state with data on success
+      state = AsyncValue.Data(recipeData);
+
+    } catch (e, stackTrace) {
+      // 4a. Update state with error
+      state = AsyncValue.Error(e, stackTrace);
+      
+      // 4b. [NEW] Save the error message to our new provider
+      // FE1 Task 2 (ApiService) made 'e' contain the pretty message
+      ref.read(recipeErrorProvider.notifier).state = e.toString();
+    }
   }
-}
 
 // (3) The global loading provider (Task 3 from plan)
 // This provider simply checks if recipeProvider is in a loading state.
@@ -44,4 +57,12 @@ class RecipeNotifier extends AsyncNotifier<RecipeResponse?> {
 final isLoadingProvider = Provider<bool>((ref) {
   final recipeState = ref.watch(recipeProvider);
   return recipeState.isLoading;
+});
+
+// (3) The global error provider (Task 3 from plan)
+// This provider holds the error message string.
+// FE2 can watch this to show a SnackBar.
+// It's a StateProvider, meaning it's a simple variable we can set.
+final recipeErrorProvider = StateProvider<String?>((ref) {
+  return null; // Initial state is no error
 });
