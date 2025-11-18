@@ -36,14 +36,26 @@ class ApiService {
         // using the fromJson factory we created in Step 3.
         return RecipeResponse.fromJson(response.data);
       } else {
-        throw Exception('Failed to load recipes');
+        throw Exception('Server returned an error: ${response.statusCode}');
       }
 
     } on DioException catch (e) {
-      // Handle Dio errors (e.g., 404, 500 from BE)
-      // We can parse the error response from BE if needed
-      print('DioError: ${e.response?.data ?? e.message}');
-      throw Exception('Failed to connect to server: ${e.message}');
+      // Handle Dio errors (timeout, no connection, 404, 500)
+
+      // Check if the error is a response from the server (like 400, 404, 500)
+      if (e.response != null && e.response!.data != null) {
+        // Try to parse the error message from BE (based on our API spec)
+        try {
+          final String errorMessage = e.response!.data['message'];
+          throw Exception(errorMessage); // Throw the *specific* error from BE
+        } catch (_) {
+          // If BE's error format is wrong, throw a generic server error
+          throw Exception('An error occurred on the server.');
+        }
+      } else {
+        // This handles connection errors (no internet, timeout, server down)
+        throw Exception('Failed to connect to the server. Check your network.');
+      }
     } catch (e) {
       // Handle other parsing errors
       print('UnknownError: $e');
