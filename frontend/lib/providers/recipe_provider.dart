@@ -1,68 +1,44 @@
-// This file manages the state of the recipe API call
-
 import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data/models/recipe_model.dart'; // From Week 2, Step 3
 import 'api_provider.dart'; // From Week 2, Step 4
 
-// (1) The main provider that manages the async state
-// The UI (FE2) will 'watch' this provider
-final recipeProvider =
-AsyncNotifierProvider<RecipeNotifier, RecipeResponse?>(
+// (1) The main provider
+// 이 Provider 하나가 데이터, 로딩, 에러 상태를 모두 관리합니다.
+final recipeProvider = AsyncNotifierProvider<RecipeNotifier, RecipeResponse?>(
   RecipeNotifier.new,
 );
 
-// (2) The Notifier class that holds the logic
+// (2) The Notifier class
 class RecipeNotifier extends AsyncNotifier<RecipeResponse?> {
-
   @override
   Future<RecipeResponse?> build() {
     // Return null for the initial state (no data yet)
+    // 초기 상태는 AsyncValue.Data(null)이 됩니다.
     return Future.value(null);
   }
 
   // --- This is the key function for FE1 ---
-  // This function will be called from CameraScreen
   Future<void> fetchRecipes(File image) async {
     // 1. Set state to loading
     state = const AsyncLoading();
-    // [NEW] Clear any previous error when a new request starts
-    ref.read(recipeErrorProvider.notifier).state = null;
 
-    // 2. Read the ApiService
-    final apiService = ref.read(apiServiceProvider);
-
-    // 3. We use a manual try-catch instead of AsyncValue.guard
-    //    to gain control over the error object.
-    try {
-      // 3a. Call the API
+    // 2. AsyncValue.guard를 사용해 API 호출
+    // guard는 자동으로 try-catch를 수행하고,
+    // 성공 시: state = AsyncValue.Data(결과)
+    // 실패 시: state = AsyncValue.Error(에러, 스택)
+    // 로 상태를 업데이트해 줍니다.
+    state = await AsyncValue.guard(() async {
+      final apiService = ref.read(apiServiceProvider);
       final recipeData = await apiService.recommendRecipes(image);
-      
-      // 3b. Update state with data on success
-      state = AsyncValue.Data(recipeData);
-
-    } catch (e, stackTrace) {
-      // 4a. Update state with error
-      state = AsyncValue.Error(e, stackTrace);
-      
-      // 4b. [NEW] Save the error message to our new provider
-      // FE1 Task 2 (ApiService) made 'e' contain the pretty message
-      ref.read(recipeErrorProvider.notifier).state = e.toString();
-    }
+      return recipeData;
+    });
   }
+}
 
-// (3) The global loading provider (Task 3 from plan)
-// This provider simply checks if recipeProvider is in a loading state.
-// FE2 can watch this to show the LoadingIndicator.
-final isLoadingProvider = Provider<bool>((ref) {
-  final recipeState = ref.watch(recipeProvider);
-  return recipeState.isLoading;
-});
+// (3) [삭제]
+// isLoadingProvider와 recipeErrorProvider는 더 이상 필요 없습니다.
+// recipeProvider가 이 정보들을 모두 가지고 있습니다.
 
-// (3) The global error provider (Task 3 from plan)
-// This provider holds the error message string.
-// FE2 can watch this to show a SnackBar.
-// It's a StateProvider, meaning it's a simple variable we can set.
-final recipeErrorProvider = StateProvider<String?>((ref) {
-  return null; // Initial state is no error
-});
+// final isLoadingProvider = Provider<bool>((ref) { ... }); // <-- 삭제
+// final recipeErrorProvider = StateProvider<String?>((ref) { ... }); // <-- 삭제
