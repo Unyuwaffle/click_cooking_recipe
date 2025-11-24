@@ -36,9 +36,3 @@ class RecipeNotifier extends AsyncNotifier<RecipeResponse?> {
   }
 }
 
-// (3) [삭제]
-// isLoadingProvider와 recipeErrorProvider는 더 이상 필요 없습니다.
-// recipeProvider가 이 정보들을 모두 가지고 있습니다.
-
-// final isLoadingProvider = Provider<bool>((ref) { ... }); // <-- 삭제
-// final recipeErrorProvider = StateProvider<String?>((ref) { ... }); // <-- 삭제
