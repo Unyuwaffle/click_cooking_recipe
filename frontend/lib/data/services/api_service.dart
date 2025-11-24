@@ -7,7 +7,7 @@ import '../models/recipe_model.dart';
 class ApiService {
 
   final Dio _dio = Dio(BaseOptions(
-    baseUrl: 'http://[BE_담당자_IP]:8000/api/v1',
+    baseUrl: 'http://220.70.152.54:8000/api/v1',
     connectTimeout: const Duration(seconds: 5),
     receiveTimeout: const Duration(seconds: 3),
   ));
