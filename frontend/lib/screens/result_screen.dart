@@ -71,10 +71,10 @@ class ResultScreen extends ConsumerWidget {
           // (3-1) Initial Null State: Show a guide UI
           // [FE2 Polish] Replaced simple text with an inviting UI
           if (recipeData == null) {
-            return Center(
+            return const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Icon(Icons.image_search, size: 80, color: Colors.grey),
                   SizedBox(height: 16),
                   Text(
