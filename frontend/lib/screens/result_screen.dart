@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 // Import necessary files
 import '../data/models/recipe_model.dart';
@@ -170,7 +171,7 @@ class ResultScreen extends ConsumerWidget {
                         ),
                         trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                         onTap: () {
-                          // TODO: Navigate to detail page
+                          context.push('/detail', extra: recipe);
                         },
                       ),
                     );
