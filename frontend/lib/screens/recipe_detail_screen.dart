@@ -1,3 +1,5 @@
+// lib/screens/recipe_detail_screen.dart
+
 import 'package:flutter/material.dart';
 import '../data/models/recipe_model.dart'; // we reuse model (already created)
 
