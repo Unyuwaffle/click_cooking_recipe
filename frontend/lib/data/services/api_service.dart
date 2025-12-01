@@ -7,9 +7,11 @@ import '../models/recipe_model.dart';
 class ApiService {
 
   final Dio _dio = Dio(BaseOptions(
-    baseUrl: 'http://220.70.152.54:8000/api/v1',
-    connectTimeout: const Duration(seconds: 5),
-    receiveTimeout: const Duration(seconds: 3),
+        baseUrl: 'https://fastapi-server-263460396038.asia-northeast3.run.app/api/v1',
+      //baseUrl: 'http://172.18.176.1:8000/api/v1',
+
+    connectTimeout: const Duration(seconds: 10),
+    receiveTimeout: const Duration(seconds: 10),
   ));
 
   // --- MODIFICATION HERE ---
@@ -19,14 +21,15 @@ class ApiService {
     try {
       String fileName = imageFile.path.split('/').last;
       FormData formData = FormData.fromMap({
-        "image": await MultipartFile.fromFile(
+        "file": await MultipartFile.fromFile(
           imageFile.path,
           filename: fileName,
+          contentType: DioMediaType.parse("image/jpeg")
         ),
       });
 
       final response = await _dio.post(
-        '/recipes/recommend',
+        '/upload',
         data: formData,
       );
 
