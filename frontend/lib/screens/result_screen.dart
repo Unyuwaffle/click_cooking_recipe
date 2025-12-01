@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 // Import necessary files
 import '../data/models/recipe_model.dart';
@@ -70,10 +71,10 @@ class ResultScreen extends ConsumerWidget {
           // (3-1) Initial Null State: Show a guide UI
           // [FE2 Polish] Replaced simple text with an inviting UI
           if (recipeData == null) {
-            return Center(
+            return const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Icon(Icons.image_search, size: 80, color: Colors.grey),
                   SizedBox(height: 16),
                   Text(
@@ -170,7 +171,7 @@ class ResultScreen extends ConsumerWidget {
                         ),
                         trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                         onTap: () {
-                          // TODO: Navigate to detail page
+                          context.push('/detail', extra: recipe);
                         },
                       ),
                     );
