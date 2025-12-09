@@ -4,15 +4,20 @@ import 'screens/camera_screen.dart';
 import 'screens/result_screen.dart';
 import 'screens/recipe_detail_screen.dart';
 import 'data/models/recipe_model.dart';
+import 'screens/splash_screen.dart';
 
 // Create a GoRouter object
 final GoRouter router = GoRouter(
 
   // The app's starting (initial) path
-  initialLocation: '/home',
+  initialLocation: '/',
 
   // Path definition
   routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const SplashScreen(),
+    ),
     GoRoute(
       path: '/home',
       builder: (context, state) => const HomeScreen(),
