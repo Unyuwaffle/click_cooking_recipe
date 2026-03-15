@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   _navigateToHome() async {
     await Future.delayed(const Duration(milliseconds: 2000), () {});
     if (mounted) {
-      // 'go'를 쓰면 뒤로가기가 안 됩니다. (스플래시는 뒤로 갈 필요 없으니까 정답!)
+      // 'go'를 쓰면 뒤로가기가 안 됩니다.
       context.go('/home');
     }
   }

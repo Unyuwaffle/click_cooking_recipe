@@ -7,8 +7,8 @@ import '../models/recipe_model.dart';
 class ApiService {
 
   final Dio _dio = Dio(BaseOptions(
-        baseUrl: 'https://fastapi-server-263460396038.asia-northeast3.run.app/api/v1',
-      //baseUrl: 'http://172.18.176.1:8000/api/v1',
+        baseUrl: '/api/v1',
+      //baseUrl: '',
 
     connectTimeout: const Duration(seconds: 10),
     receiveTimeout: const Duration(seconds: 10),
