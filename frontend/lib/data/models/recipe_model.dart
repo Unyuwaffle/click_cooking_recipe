@@ -1,12 +1,10 @@
-// To parse this JSON data, do
-//
-//     final recipeResponse = recipeResponseFromJson(jsonString);
-
 import 'dart:convert';
 
-RecipeResponse recipeResponseFromJson(String str) => RecipeResponse.fromJson(json.decode(str));
+RecipeResponse recipeResponseFromJson(String str) =>
+    RecipeResponse.fromJson(json.decode(str) as Map<String, dynamic>);
 
-String recipeResponseToJson(RecipeResponse data) => json.encode(data.toJson());
+String recipeResponseToJson(RecipeResponse data) =>
+    json.encode(data.toJson());
 
 class RecipeResponse {
   List<String> recognizedIngredients;
@@ -18,12 +16,18 @@ class RecipeResponse {
   });
 
   factory RecipeResponse.fromJson(Map<String, dynamic> json) => RecipeResponse(
-    recognizedIngredients: List<String>.from(json["recognizedIngredients"].map((x) => x)),
-    recipes: List<Recipe>.from(json["recipes"].map((x) => Recipe.fromJson(x))),
+    recognizedIngredients: List<String>.from(
+      (json["recognizedIngredients"] ?? []).map((x) => x.toString()),
+    ),
+    recipes: List<Recipe>.from(
+      (json["recipes"] ?? [])
+          .map((x) => Recipe.fromJson(x as Map<String, dynamic>)),
+    ),
   );
 
   Map<String, dynamic> toJson() => {
-    "recognizedIngredients": List<dynamic>.from(recognizedIngredients.map((x) => x)),
+    "recognizedIngredients":
+    List<dynamic>.from(recognizedIngredients.map((x) => x)),
     "recipes": List<dynamic>.from(recipes.map((x) => x.toJson())),
   };
 }
@@ -36,7 +40,7 @@ class Recipe {
   String difficulty;
   String estimatedTime;
   List<Ingredient> ingredients;
-  List<Step> steps;
+  List<RecipeStep> steps;
 
   Recipe({
     required this.recipeId,
@@ -50,14 +54,20 @@ class Recipe {
   });
 
   factory Recipe.fromJson(Map<String, dynamic> json) => Recipe(
-    recipeId: json["recipeId"],
-    title: json["title"],
-    thumbnailUrl: json["thumbnailUrl"],
-    matchRate: json["matchRate"]?.toDouble(),
-    difficulty: json["difficulty"],
-    estimatedTime: json["estimatedTime"],
-    ingredients: List<Ingredient>.from(json["ingredients"].map((x) => Ingredient.fromJson(x))),
-    steps: List<Step>.from(json["steps"].map((x) => Step.fromJson(x))),
+    recipeId: json["recipeId"] ?? 0,
+    title: json["title"] ?? "",
+    thumbnailUrl: json["thumbnailUrl"] ?? "",
+    matchRate: (json["matchRate"] ?? 0).toDouble(),
+    difficulty: json["difficulty"] ?? "",
+    estimatedTime: json["estimatedTime"] ?? "",
+    ingredients: List<Ingredient>.from(
+      (json["ingredients"] ?? [])
+          .map((x) => Ingredient.fromJson(x as Map<String, dynamic>)),
+    ),
+    steps: List<RecipeStep>.from(
+      (json["steps"] ?? [])
+          .map((x) => RecipeStep.fromJson(x as Map<String, dynamic>)),
+    ),
   );
 
   Map<String, dynamic> toJson() => {
@@ -84,9 +94,9 @@ class Ingredient {
   });
 
   factory Ingredient.fromJson(Map<String, dynamic> json) => Ingredient(
-    name: json["name"],
-    amount: json["amount"],
-    owned: json["owned"],
+    name: json["name"] ?? "",
+    amount: json["amount"] ?? "",
+    owned: json["owned"] ?? false,
   );
 
   Map<String, dynamic> toJson() => {
@@ -96,18 +106,18 @@ class Ingredient {
   };
 }
 
-class Step {
+class RecipeStep {
   int stepNumber;
   String description;
 
-  Step({
+  RecipeStep({
     required this.stepNumber,
     required this.description,
   });
 
-  factory Step.fromJson(Map<String, dynamic> json) => Step(
-    stepNumber: json["stepNumber"],
-    description: json["description"],
+  factory RecipeStep.fromJson(Map<String, dynamic> json) => RecipeStep(
+    stepNumber: json["stepNumber"] ?? 0,
+    description: json["description"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {

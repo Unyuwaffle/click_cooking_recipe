@@ -40,8 +40,8 @@ class HomeScreen extends ConsumerWidget {
         Ingredient(name: "고추장", amount: "1큰술", owned: true),
       ],
       steps: [
-        Step(stepNumber: 1, description: "물에 고추장과 설탕을 풉니다."),
-        Step(stepNumber: 2, description: "떡과 어묵을 넣고 끓입니다."),
+        RecipeStep(stepNumber: 1, description: "물에 고추장과 설탕을 풉니다."),
+        RecipeStep(stepNumber: 2, description: "떡과 어묵을 넣고 끓입니다."),
       ],
     );
 
