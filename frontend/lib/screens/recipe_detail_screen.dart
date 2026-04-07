@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../data/models/recipe_model.dart'; // we reuse model (already created)
+import 'package:go_router/go_router.dart';
 
 class RecipeDetailScreen extends StatelessWidget {
   final Recipe recipe;
@@ -21,6 +22,12 @@ class RecipeDetailScreen extends StatelessWidget {
               icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
               onPressed: () => Navigator.pop(context),
             ),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.home, color: Colors.white),
+                onPressed: () => context.go('/home'),
+              ),
+            ],
             flexibleSpace: FlexibleSpaceBar(
               background: Stack(
                 children: [
