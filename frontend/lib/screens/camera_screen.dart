@@ -45,7 +45,14 @@ class _CameraScreenState extends ConsumerState<CameraScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('재료 사진 등록')),
+      appBar: AppBar(title: const Text('재료 사진 등록'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.home_outlined),
+            onPressed: () => context.go('/home'), // 홈으로 초기화 이동
+          ),
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -93,18 +100,15 @@ class _CameraScreenState extends ConsumerState<CameraScreen> {
             const SizedBox(height: 40),
 
             PrimaryButton(
-              text: '이 사진으로 레시피 찾기',
-              onPressed: () {
+              text: '사진 분석하기',
+              onPressed: () async {
                 if (_selectedImage != null) {
-                  // --- This is the key integration logic (FE1) ---
 
-                  // 1. Call the provider's function to start the API POST
-                  // We use ref.read() inside a function
-                  ref.read(recipeProvider.notifier).fetchRecipes(_selectedImage!);
+                  await ref.read(recipeProvider.notifier).recognizeIngredientsOnly(_selectedImage!);
 
-                  // 2. Go to the result screen
-                  context.go('/result');
-
+                  if (context.mounted) {
+                    context.go('/edit-ingredients');
+                  }
                   // --- End of integration logic ---
                 } else {
                   // Show an error if no image is selected
