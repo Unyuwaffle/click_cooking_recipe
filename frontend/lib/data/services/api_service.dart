@@ -6,7 +6,7 @@ import '../models/recipe_model.dart';
 
 class ApiService {
   final Dio _dio = Dio(BaseOptions(
-    // TODO: 실제 서버의 IP 주소와 포트로 변경하세요 (예: http://13.125.xx.xx:8000)
+    //서버 주소 수정해야함!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     baseUrl: 'http://10.0.2.2:8000/api/v1',
     connectTimeout: const Duration(seconds: 10),
     receiveTimeout: const Duration(seconds: 10),
