@@ -39,6 +39,7 @@ dependencies:
   flutter_riverpod: ^3.0.3
   riverpod: ^3.0.3
   image_picker: ^1.2.0
+  camera: ^0.12.0+1
 
 dev_dependencies:
   flutter_test:
