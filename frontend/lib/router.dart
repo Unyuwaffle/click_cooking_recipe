@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'screens/home_screen.dart';
 import 'screens/camera_screen.dart';
 import 'screens/result_screen.dart';
+import 'screens/ingredient_edit_screen.dart';
 import 'screens/recipe_detail_screen.dart';
 import 'data/models/recipe_model.dart';
 import 'screens/splash_screen.dart';
@@ -25,6 +26,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/camera',
       builder: (context, state) => const CameraScreen(),
+    ),
+    GoRoute(
+      path: '/edit-ingredients',
+      builder: (context, state) => const IngredientEditScreen(),
     ),
     GoRoute(
       path: '/result',

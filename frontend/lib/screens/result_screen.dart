@@ -16,7 +16,14 @@ class ResultScreen extends ConsumerWidget {
     final AsyncValue<RecipeResponse?> recipeState = ref.watch(recipeProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('추천 레시피')),
+      appBar: AppBar(title: const Text('추천 레시피'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.home_outlined),
+            onPressed: () => context.go('/home'),
+          ),
+        ],
+      ),
       body: recipeState.when(
 
         // 1. Loading State: Show the spinner
