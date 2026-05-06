@@ -1,13 +1,13 @@
 // lib/data/services/api_service.dart
 
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:io';
 import '../models/recipe_model.dart';
 
 class ApiService {
   final Dio _dio = Dio(BaseOptions(
-    //서버 주소 수정해야함!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    baseUrl: 'http://10.0.2.2:8000/api/v1',
+    baseUrl: dotenv.env['BASE_URL'] ?? 'http://10.0.2.2:8000/api/v1',
     connectTimeout: const Duration(seconds: 10),
     receiveTimeout: const Duration(seconds: 10),
   ));
