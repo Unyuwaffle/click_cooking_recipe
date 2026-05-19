@@ -155,7 +155,7 @@ class _SplashScreenState extends State<SplashScreen> {
 // 🛠️ 에러가 났던 점 위젯의 올바른 구현부
 class _Dot extends StatelessWidget {
   final Color color;
-  const _Dot({super.key, required this.color});
+  const _Dot({required this.color});
 
   @override
   Widget build(BuildContext context) {
