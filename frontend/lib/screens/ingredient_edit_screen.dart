@@ -15,6 +15,7 @@ class IngredientEditScreen extends ConsumerStatefulWidget {
 class _IngredientEditScreenState extends ConsumerState<IngredientEditScreen> {
   final ScrollController _scrollController = ScrollController();
   List<String> _ingredients = [];
+  bool _isInitialized = false;
 
   @override
   void initState() {
@@ -34,6 +35,21 @@ class _IngredientEditScreenState extends ConsumerState<IngredientEditScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final recipeState = ref.watch(recipeProvider);
+
+    // 상태가 로드되었고, 아직 로컬 리스트에 복사하지 않았다면 복사합니다.
+    recipeState.whenData((state) {
+      if (!_isInitialized) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          setState(() {
+            _ingredients = List.from(state?.recognizedIngredients ?? []);
+            _isInitialized = true;
+          });
+        });
+      }
+    });
+
     const primaryGreen = Color(0xFF1E6027);
     const accentOrange = Color(0xFFE67E22);
 
@@ -66,7 +82,7 @@ class _IngredientEditScreenState extends ConsumerState<IngredientEditScreen> {
               // 리스트 렌더링
               ..._ingredients.asMap().entries.map((entry) {
                 return _buildIngredientCard(entry.value, () => setState(() => _ingredients.removeAt(entry.key)));
-              }).toList(),
+              }),
               const SizedBox(height: 10),
               _buildAddButton(),
               const SizedBox(height: 40),

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart' hide Step;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../providers/recipe_provider.dart';
 import '../data/models/recipe_model.dart';
 
 class HomeScreen extends ConsumerWidget {
